@@ -5,7 +5,8 @@ import createQuestionPresenter from "../presenter/CreateQuestionPresenter"
 
 const mapModelStateToComponentState = modelState => ({
     title: modelState.newQuestion.title,
-    text: modelState.newQuestion.text
+    text: modelState.newQuestion.text,
+    tags: modelState.newQuestion.tags
 });
 
 export default class SmartCreateQuestion extends Component {
@@ -27,6 +28,7 @@ export default class SmartCreateQuestion extends Component {
                 onChange={createQuestionPresenter.onChange}
                 title={this.state.title}
                 text={this.state.text}
+                tags={this.state.tags}
             />
         );
     }

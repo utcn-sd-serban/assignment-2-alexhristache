@@ -11,6 +11,7 @@ class QuestionModel extends EventEmitter {
                 text: "Yet, when you dive into the Git book, the first thing you are told is that a file in Git can be either tracked or untracked. Furthermore, it seems to me like the whole Git experience is geared towards file versioning. When using git diff or git status output is presented on a per file basis. When using git add you also get to choose on a per file basis. You can even review history on a file basis and is lightning fast. How should this statement be interpreted?",
                 creationDateTime: "2018-09-18 16:39:22",
                 score: 0,
+                tags: "java, programming, templates"
                 // answers: [{
                 //     answerId: 1,
                 //     questionId: 1,
@@ -31,19 +32,30 @@ class QuestionModel extends EventEmitter {
                 text: "Furthermore, it seems to me like the whole Git experience is geared towards file versioning. When using git diff or git status output is presented on a per file basis. When using git add you also get to choose on a per file basis. You can even review history on a file basis and is lightning fast. How should this statement be interpreted?",
                 creationDateTime: "2018-02-18 16:39:22",
                 score: 0,
+                tags: "c++, programming, design"
             }],
             newQuestion: {
                 questionId: -1,
-                user: "-",
-                title: "-",
-                text: "-",
-                creationDateTime: "-",
+                user: "",
+                title: "",
+                text: "",
+                creationDateTime: "",
+                tags: "",
                 score: -1,
-            }
+            },
+            filter: ""
         };
     }
 
-    addQuestion(questionId, user, title, text, creationDateTime, score) {
+    changeStateProperty(property, value) {
+        this.state = {
+            ...this.state,
+            [property]: value
+        }
+        this.emit("change", this.state);
+    }
+
+    addQuestion(questionId, user, title, text, creationDateTime, tags, score) {
         this.state = {
             ...this.state,
             questions: this.state.questions.concat([{
@@ -52,7 +64,8 @@ class QuestionModel extends EventEmitter {
                 title,
                 text,
                 creationDateTime,
-                score,
+                tags,
+                score
             }])
         };
         this.emit("change", this.state);

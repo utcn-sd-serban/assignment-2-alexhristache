@@ -10,9 +10,15 @@ export default class SmartQuestionDetails extends Component {
     constructor(props) {
         super(props);
         this.state = mapModelStateToComponentState(questionModel.state, props);
-        debugger;
         this.listener = modelState => this.setState(mapModelStateToComponentState(modelState, this.props));
         questionModel.addListener("change", this.listener);
+        debugger;
+    }
+
+    componentDidUpdate(prev) {
+        if (prev.match.params.index !== this.props.match.params.index) {
+            this.setState(mapModelStateToComponentState(questionModel.state, this.props));
+        }
     }
 
     componentWillUnmount() {
@@ -20,7 +26,6 @@ export default class SmartQuestionDetails extends Component {
     }
 
     render() {
-        //debugger;
         return (
             <QuestionDetails
                 user={this.state.user}
