@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import questionModel from "../model/QuestionModel";
-import QuestionList from "./QuestionList";
-import questionListPresenter from "../presenter/QuestionListPresenter";
+import CreateQuestion from "./CreateQuestion";
+import createQuestionPresenter from "../presenter/CreateQuestionPresenter"
 
 const mapModelStateToComponentState = modelState => ({
-    questions: modelState.questions
+    title: modelState.newQuestion.title,
+    text: modelState.newQuestion.text
 });
 
-export default class SmartQuestionList extends Component {
+export default class SmartCreateQuestion extends Component {
     constructor() {
         super();
         this.state = mapModelStateToComponentState(questionModel.state);
@@ -20,12 +21,12 @@ export default class SmartQuestionList extends Component {
     }
 
     render() {
-        debugger;
         return (
-            <QuestionList
-                questions={this.state.questions}
-                onCreateQuestion={questionListPresenter.onCreateQuestion}
-                onViewDetails={questionListPresenter.onViewDetails}
+            <CreateQuestion
+                onCreate={createQuestionPresenter.onCreate}
+                onChange={createQuestionPresenter.onChange}
+                title={this.state.title}
+                text={this.state.text}
             />
         );
     }

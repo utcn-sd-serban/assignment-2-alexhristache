@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import QuestionList from './view/QuestionList';
+
+import { HashRouter, Switch, Route } from "react-router-dom";
 import SmartQuestionList from './view/SmartQuestionList';
+import SmartCreateQuestion from './view/SmartCreateQuestion';
+import SmartQuestionDetails from './view/SmartQuestionDetails';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <SmartQuestionList />
+        <HashRouter>
+          <Switch>
+            <Route exact={true} component={SmartQuestionList} path="/" />
+            <Route exact={true} component={SmartCreateQuestion} path="/create-question" />
+            <Route exact={true} component={SmartQuestionDetails} path="/question-details/:index" />
+          </Switch>
+        </HashRouter>
       </div>
     );
   }
