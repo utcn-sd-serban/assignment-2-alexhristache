@@ -1,6 +1,6 @@
 import React from "react";
 
-const QuestionList = ({ questions, onCreateQuestion, onViewDetails, onFilterByTag, onChange, onFilterByText, filter }) => (
+const QuestionList = ({ questions, onCreateQuestion, onViewDetails, onFilterByTag, onChange, onFilterByText, filter, onUpvote, onDownvote }) => (
     <div>
         <h2>Questions</h2>
         <br />
@@ -10,8 +10,8 @@ const QuestionList = ({ questions, onCreateQuestion, onViewDetails, onFilterByTa
         <input value={filter}
             onChange={e => onChange("filter", e.target.value)} />
         <br />
-        <button onClick={ () => onFilterByTag(filter)}>Filter by tag</button>
-        <button onClick={ () => onFilterByText(filter)}>Filter by title</button>
+        <button onClick={() => onFilterByTag(filter)}>Filter by tag</button>
+        <button onClick={() => onFilterByText(filter)}>Filter by title</button>
         <br />
         <br /><br />
         <div>
@@ -25,19 +25,23 @@ const QuestionList = ({ questions, onCreateQuestion, onViewDetails, onFilterByTa
                         <th>Tags</th>
                         <th>Score</th>
                         <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        questions.map((question, index) => (
-                            <tr key={index}>
+                        questions.map((question) => (
+                            <tr key={question.questionId}>
                                 <td>{question.user}</td>
                                 <td>{question.title}</td>
                                 <td>{question.text}</td>
                                 <td>{question.creationDateTime}</td>
                                 <td>{question.tags}</td>
                                 <td>{question.score}</td>
-                                <td><button onClick={ () => onViewDetails(index)}>View Details</button></td>
+                                <td><button onClick={() => onViewDetails(question.questionId)}>View Details</button></td>
+                                <td><button onClick={() => onUpvote(question.questionId)}>Upvote</button></td>
+                                <td><button onClick={() => onDownvote(question.questionId)}>Downvote</button></td>
                             </tr>
                         ))
                     }

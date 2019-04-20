@@ -3,26 +3,16 @@ import questionModel from "../model/QuestionModel";
 import QuestionList from "./QuestionList";
 import questionListPresenter from "../presenter/QuestionListPresenter";
 
-const mapModelStateToComponentState = (modelState, props) => ({
-    questions: modelState.questions,
-    filter: props.match.params.filter
+const mapModelStateToComponentState = (modelState) => ({
+    questions: modelState.filteredQuestions,
+    filter: modelState.filter,
 });
 
-function filterByTag(questions, tag) {
-    let newQuestions = []
-        for (let question of questions) {
-            if (question.tags.includes(tag)) {
-                newQuestions.add(question);
-            }
-        }
-    return newQuestions;
-}
-
-export default class SmartQuestionList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = mapModelStateToComponentState(questionModel.state, props);
-        this.listener = modelState => this.setState(mapModelStateToComponentState(modelState, props));
+export default class SmartQuestionListByText extends Component {
+    constructor() {
+        super();
+        this.state = mapModelStateToComponentState(questionModel.state);
+        this.listener = modelState => this.setState(mapModelStateToComponentState(modelState));
         questionModel.addListener("change", this.listener);
     }
 
@@ -33,9 +23,15 @@ export default class SmartQuestionList extends Component {
     render() {
         return (
             <QuestionList
-                questions={filterByTag(this.state.questions, this.state.filter)}
+                questions={this.state.questions}
                 onCreateQuestion={questionListPresenter.onCreateQuestion}
                 onViewDetails={questionListPresenter.onViewDetails}
+                onChange={questionListPresenter.onChange}
+                filter={this.state.filter}
+                onFilterByTag={questionListPresenter.onFilterByTag}
+                onFilterByText={questionListPresenter.onFilterByText}
+                onUpvote={questionListPresenter.onUpvote}
+                onDownvote={questionListPresenter.onDownvote}
             />
         );
     }

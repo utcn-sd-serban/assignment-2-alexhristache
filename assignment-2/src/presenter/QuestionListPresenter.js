@@ -1,4 +1,5 @@
 import questionModel from "../model/QuestionModel";
+import answerModel from "../model/AnswerModel";
 
 class QuestionListPresenter {
     onCreateQuestion() {
@@ -6,19 +7,30 @@ class QuestionListPresenter {
     }
 
     onViewDetails(index) {
+        answerModel.findAnswersForQuestion(index);
         window.location.assign("#/question-details/" + index);
     }
 
     onFilterByTag(filter) {
-        window.location.assign("#/tag/" + filter);
+        questionModel.filterByTag(filter);
+        window.location.assign("#/tag/");
     }
 
     onFilterByText(filter) { 
-        window.location.assign("#/title/" + filter);
+        questionModel.filterByText(filter);
+        window.location.assign("#/title/");
     }
 
     onChange(property, value) {
         questionModel.changeStateProperty(property, value);
+    }
+
+    onUpvote(questionId) {
+        questionModel.vote(questionId, 1);
+    }
+
+    onDownvote(questionId) {
+        questionModel.vote(questionId, -1);
     }
 }
 

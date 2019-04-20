@@ -11,20 +11,7 @@ class QuestionModel extends EventEmitter {
                 text: "Yet, when you dive into the Git book, the first thing you are told is that a file in Git can be either tracked or untracked. Furthermore, it seems to me like the whole Git experience is geared towards file versioning. When using git diff or git status output is presented on a per file basis. When using git add you also get to choose on a per file basis. You can even review history on a file basis and is lightning fast. How should this statement be interpreted?",
                 creationDateTime: "2018-09-18 16:39:22",
                 score: 0,
-                tags: "java, programming, templates"
-                // answers: [{
-                //     answerId: 1,
-                //     questionId: 1,
-                //     user: "Andrei",
-                //     text: "My first answer to Q1",
-                //     creationDateTime: "2018-09-18T16:39:22"
-                // }, {
-                //     answerId: 2,
-                //     questionId: 1,
-                //     user: "Andrei",
-                //     text: "My second answer to  Q1",
-                //     creationDateTime: "2018-09-18T16:39:22"
-                // }]
+                tags: "java, programming, templates",
             }, {
                 questionId: 2,
                 user: "Andrei",
@@ -32,7 +19,8 @@ class QuestionModel extends EventEmitter {
                 text: "Furthermore, it seems to me like the whole Git experience is geared towards file versioning. When using git diff or git status output is presented on a per file basis. When using git add you also get to choose on a per file basis. You can even review history on a file basis and is lightning fast. How should this statement be interpreted?",
                 creationDateTime: "2018-02-18 16:39:22",
                 score: 0,
-                tags: "c++, programming, design"
+                tags: "c++, programming, design",
+                answers: [],
             }],
             newQuestion: {
                 questionId: -1,
@@ -43,8 +31,17 @@ class QuestionModel extends EventEmitter {
                 tags: "",
                 score: -1,
             },
-            filter: ""
+            filter: "",
+            filteredQuestions: []
         };
+    }
+
+    findById(id) {
+        for (let question of this.state.questions) {
+            if (question.questionId === id) {
+                return question;
+            }
+        }
     }
 
     changeStateProperty(property, value) {
@@ -55,7 +52,37 @@ class QuestionModel extends EventEmitter {
         this.emit("change", this.state);
     }
 
-    addQuestion(questionId, user, title, text, creationDateTime, tags, score) {
+    filterByTag(filter) {
+        let newQuestions = []
+        for (let question of this.state.questions) {
+            if (question.tags.includes(filter)) {
+                newQuestions.push(question);
+            }
+        }
+
+        this.state = {
+            ...this.state,
+            filteredQuestions: newQuestions
+        }
+        this.emit("change", this.state);
+    }
+
+    filterByText(filter) {
+        let newQuestions = []
+        for (let question of this.state.questions) {
+            if (question.title.includes(filter)) {
+                newQuestions.push(question);
+            }
+        }
+
+        this.state = {
+            ...this.state,
+            filteredQuestions: newQuestions
+        }
+        this.emit("change", this.state);
+    }
+
+    addQuestion(questionId, user, title, text, creationDateTime, tags, score, answers) {
         this.state = {
             ...this.state,
             questions: this.state.questions.concat([{
@@ -65,7 +92,8 @@ class QuestionModel extends EventEmitter {
                 text,
                 creationDateTime,
                 tags,
-                score
+                score,
+                answers,
             }])
         };
         this.emit("change", this.state);
@@ -78,6 +106,22 @@ class QuestionModel extends EventEmitter {
                 ...this.state.newQuestion,
                 [property]: value
             }
+        }
+        this.emit("change", this.state);
+    }
+
+    vote(id, vote) {
+        let newQuestions = [];
+        for (let question of this.state.questions) {
+            if (question.questionId === id) {
+                question.score = question.score + vote;
+            }
+            newQuestions.push(question);
+        }
+
+        this.state = {
+            ...this.state,
+            questions: newQuestions
         }
         this.emit("change", this.state);
     }

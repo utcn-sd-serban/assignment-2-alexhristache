@@ -17,6 +17,7 @@ const QuestionDetails = ({user, title, text, creationDateTime, score}) => (
         <br />
         <label>Question: </label>
         <span>{text}</span>
+        <br /><br />
     </div>
 );
 

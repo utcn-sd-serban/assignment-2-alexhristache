@@ -1,16 +1,17 @@
-import questionModel from "../model/QuestionModel"
+import questionModel from "../model/QuestionModel";
+import userModel from "../model/UserModel";
 
 class CreateQuestionPresenter {
 
     onCreate() {
-        questionModel.addQuestion(0, "Alex", questionModel.state.newQuestion.title, questionModel.state.newQuestion.text, "Today", questionModel.state.newQuestion.tags, 0);
-        questionModel.changeNewQuestionProperty("questionId", NaN);
+        questionModel.addQuestion(12, userModel.state.loggedUser, questionModel.state.newQuestion.title, questionModel.state.newQuestion.text, "Today", questionModel.state.newQuestion.tags, 0, []);
+        questionModel.changeNewQuestionProperty("questionId", 0);
         questionModel.changeNewQuestionProperty("user", "");
         questionModel.changeNewQuestionProperty("title", "");
         questionModel.changeNewQuestionProperty("text", "");
         questionModel.changeNewQuestionProperty("creationDateTime", "");
         questionModel.changeNewQuestionProperty("tags", "");
-        questionModel.changeNewQuestionProperty("score", NaN);
+        questionModel.changeNewQuestionProperty("score", 0);
         window.location.assign("#/");
     }
 
