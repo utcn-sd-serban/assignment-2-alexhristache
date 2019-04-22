@@ -1,6 +1,6 @@
 import React from "react";
 
-const QuestionDetails = ({user, title, text, creationDateTime, score}) => (
+const QuestionDetails = ({ questionId, user, title, text, creationDateTime, score, onCreateAnswer}) => (
     <div>
         <h2>Question</h2>
         <label>Title: </label>
@@ -17,6 +17,8 @@ const QuestionDetails = ({user, title, text, creationDateTime, score}) => (
         <br />
         <label>Question: </label>
         <span>{text}</span>
+        <br />
+        <button onClick={() => onCreateAnswer(questionId)}>Add Answer</button>
         <br /><br />
     </div>
 );

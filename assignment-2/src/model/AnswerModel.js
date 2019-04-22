@@ -73,7 +73,7 @@ class AnswerModel extends EventEmitter {
         this.emit("change", this.state);
     }
 
-    addAnswer(answerId, questionId, user, text, creationDateTime, tags, score) {
+    addAnswer(answerId, questionId, user, text, creationDateTime, score) {
         this.state = {
             ...this.state,
             answers: this.state.answers.concat([{
@@ -81,8 +81,7 @@ class AnswerModel extends EventEmitter {
                 questionId, 
                 user, 
                 text, 
-                creationDateTime, 
-                tags, 
+                creationDateTime,  
                 score
             }])
         };

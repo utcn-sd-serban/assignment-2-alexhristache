@@ -9,6 +9,11 @@ class AnswerPresenter {
     onRemove(id) {
         answerModel.removeAnswer(id);
     }
+
+    onCreateAnswer(id) {
+        answerModel.changeNewAnswerProperty("questionId", id);
+        window.location.assign("#/create-answer");
+    }
 }
 
 const answerPresenter = new AnswerPresenter();
