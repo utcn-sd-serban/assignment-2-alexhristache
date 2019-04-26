@@ -1,6 +1,6 @@
 import React from "react";
 
-const CreateAnswer = ({ text, onCreate, onChange }) => (
+const CreateAnswer = ({ id, text, onSubmit, onChange }) => (
     <div>
         <h2>Add Answer</h2>
         <div>
@@ -8,7 +8,7 @@ const CreateAnswer = ({ text, onCreate, onChange }) => (
             <input value={text}
                 onChange={e => onChange("text", e.target.value)} />
             <br />
-            <button onClick={onCreate}>Create</button>
+            <button onClick={() => onSubmit(id)}>Submit</button>
         </div>
     </div>
 );

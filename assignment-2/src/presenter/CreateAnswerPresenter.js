@@ -3,8 +3,7 @@ import userModel from "../model/UserModel";
 
 class CreateAnswerPresenter {
 
-    onCreate() {
-        debugger;
+    onCreate(id) {
         answerModel.addAnswer(12, answerModel.state.newAnswer.questionId, userModel.state.loggedUser, answerModel.state.newAnswer.text, "Today", 0);
         window.location.assign("#/question-details/" + answerModel.state.newAnswer.questionId);
         answerModel.changeNewAnswerProperty("answerId", 0);
@@ -15,10 +14,16 @@ class CreateAnswerPresenter {
     }
 
     onChange(property, value) {
-        debugger;
         answerModel.changeNewAnswerProperty(property, value);
     }
 
+    onEditSubmit(id) {
+        debugger;
+        let answer = answerModel.findById(id);
+        answerModel.removeAnswer(id);
+        answerModel.addAnswer(id, answer.questionId, answer.user, answerModel.state.newAnswer.text, answer.creationDateTime, answer.score);
+        window.location.assign("#/question-details/" + id);
+    }
 }
 
 const createAnswerPresenter = new CreateAnswerPresenter();

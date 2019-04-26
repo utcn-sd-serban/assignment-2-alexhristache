@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import answerModel from "../model/AnswerModel";
 import CreateAnswer from "./CreateAnswer";
 import createAnswerPresenter from "../presenter/CreateAnswerPresenter"
+import answerPresenter from "../presenter/AnswerPresenter"
 
 const mapModelStateToComponentState = modelState => ({
     text: modelState.newAnswer.text,
@@ -22,7 +23,7 @@ export default class SmartCreateAnswer extends Component {
     render() {
         return (
             <CreateAnswer
-                onCreate={createAnswerPresenter.onCreate}
+                onSubmit={createAnswerPresenter.onCreate}
                 onChange={createAnswerPresenter.onChange}
                 text={this.state.text}
             />

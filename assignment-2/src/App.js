@@ -9,6 +9,7 @@ import SmartQuestionListByTag from './view/SmartQuestionListByTag';
 import SmartQuestionListByText from './view/SmartQuestionListByText';
 import SmartLogin from './view/SmartLogin';
 import SmartCreateAnswer from './view/SmartCreateAnswer';
+import SmartEditAnswer from './view/SmartEditAnswer';
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
             <Route exact={true} component={SmartQuestionListByText} path="/title/" />
             <Route exact={true} component={SmartLogin} path="/login/" />
             <Route exact={true} component={SmartCreateAnswer} path="/create-answer" />
+            <Route exact={true} component={SmartEditAnswer} path="/edit-answer" />
           </Switch>
         </HashRouter>
       </div>

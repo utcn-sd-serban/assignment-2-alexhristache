@@ -1,6 +1,6 @@
 import React from "react";
 
-const AnswerList = ({answers, onRemove, onEdit}) => (
+const AnswerList = ({ answers, onRemove, onEdit, onUpvote, onDownvote }) => (
     <div>
         <h3>Answers</h3>
         <div>
@@ -13,8 +13,10 @@ const AnswerList = ({answers, onRemove, onEdit}) => (
                                 <li>Posted by: {answer.user}</li>
                                 <li>{answer.creationDateTime}</li>
                                 <li>Score: {answer.score}</li>
-                                <button>Edit</button>
+                                <button onClick={() => onEdit(answer.answerId)}>Edit</button>
                                 <button onClick={() => onRemove(answer.answerId)}>Delete</button>
+                                <button onClick={() => onUpvote(answer.answerId)}>Upvote</button>
+                                <button onClick={() => onDownvote(answer.answerId)}>Downvote</button>
                                 <br /><br />
                             </ul>
                         </li>

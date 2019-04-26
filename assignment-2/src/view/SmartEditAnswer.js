@@ -1,36 +1,32 @@
 import React, { Component } from "react";
-import questionModel from "../model/QuestionModel";
-import QuestionDetails from "./QuestionDetails";
-import EditAnswer from "./EditAnswer";
+import answerModel from "../model/AnswerModel";
+import CreateAnswer from "./CreateAnswer";
+import createAnswerPresenter from "../presenter/CreateAnswerPresenter"
 
-const mapModelStateToComponentState = (modelState, props) => (
-    modelState.questions[props.match.params.index]
-)
+const mapModelStateToComponentState = modelState => ({
+    text: modelState.newAnswer.text,
+    id: modelState.newAnswer.answerId
+});
 
-export default class SmartEditAnswer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = mapModelStateToComponentState(questionModel.state, props);
-        this.listener = modelState => this.setState(mapModelStateToComponentState(modelState, this.props));
-        questionModel.addListener("change", this.listener);
-        debugger;
-    }
-
-    componentDidUpdate(prev) {
-        if (prev.match.params.index !== this.props.match.params.index) {
-            this.setState(mapModelStateToComponentState(questionModel.state, this.props));
-        }
+export default class SmartCreateAnswer extends Component {
+    constructor() {
+        super();
+        this.state = mapModelStateToComponentState(answerModel.state);
+        this.listener = modelState => this.setState(mapModelStateToComponentState(modelState));
+        answerModel.addListener("change", this.listener);
     }
 
     componentWillUnmount() {
-        questionModel.removeListener("change", this.listener);
+        answerModel.removeListener("change", this.listener);
     }
 
     render() {
         return (
-            <EditAnswer
+            <CreateAnswer
+                onChange={createAnswerPresenter.onChange}
+                onSubmit={createAnswerPresenter.onEditSubmit}
                 text={this.state.text}
-                onChange={questionListPresenter.onChange}
+                id={this.state.id}
             />
         );
     }

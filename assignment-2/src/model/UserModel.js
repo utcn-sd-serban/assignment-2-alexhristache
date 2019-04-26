@@ -37,7 +37,6 @@ class UserModel extends EventEmitter {
     }
 
     changeStateProperty(property, value) {
-        debugger;
         this.state = {
             ...this.state,
             [property]: value
@@ -75,7 +74,7 @@ class UserModel extends EventEmitter {
         this.state = {
             ...this.state,
             newUser: {
-                ...this.state.newuser,
+                ...this.state.newUser,
                 [property]: value
             }
         }

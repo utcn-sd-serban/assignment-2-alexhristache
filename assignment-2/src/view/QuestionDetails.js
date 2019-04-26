@@ -1,6 +1,6 @@
 import React from "react";
 
-const QuestionDetails = ({ questionId, user, title, text, creationDateTime, score, onCreateAnswer}) => (
+const QuestionDetails = ({ questionId, user, title, text, creationDateTime, score, onCreateAnswer }) => (
     <div>
         <h2>Question</h2>
         <label>Title: </label>

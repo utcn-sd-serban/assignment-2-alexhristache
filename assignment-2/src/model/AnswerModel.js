@@ -39,7 +39,6 @@ class AnswerModel extends EventEmitter {
     }
 
     findAnswersForQuestion(id) {
-        debugger;
         let answersToFind = [];
         for (let answer of this.state.answers) {
             if (answer.questionId === id) {
@@ -48,7 +47,14 @@ class AnswerModel extends EventEmitter {
         }
         this.state.answersForQuestion = answersToFind;
         this.emit("change", this.state);
-        //return answersToFind;
+    }
+
+    findById(id) {
+        for (let answer of this.state.answers) {
+            if (answer.answerId === id) {
+                return answer;
+            }
+        }
     }
 
     changeStateProperty(property, value) {
@@ -69,19 +75,20 @@ class AnswerModel extends EventEmitter {
         this.state = {
             ...this.state,
             answers: newAnswers
-        }
+        };
         this.emit("change", this.state);
+        // return newAnswers;
     }
 
     addAnswer(answerId, questionId, user, text, creationDateTime, score) {
         this.state = {
             ...this.state,
             answers: this.state.answers.concat([{
-                answerId, 
-                questionId, 
-                user, 
-                text, 
-                creationDateTime,  
+                answerId,
+                questionId,
+                user,
+                text,
+                creationDateTime,
                 score
             }])
         };
@@ -99,6 +106,21 @@ class AnswerModel extends EventEmitter {
         this.emit("change", this.state);
     }
 
+    vote(id, vote) {
+        let newAnswers = [];
+        for (let answer of this.state.answers) {
+            if (answer.answerId === id) {
+                answer.score = answer.score + vote;
+            }
+            newAnswers.push(answer);
+        }
+
+        this.state = {
+            ...this.state,
+            answers: newAnswers
+        }
+        this.emit("change", this.state);
+    }
 }
 
 const answerModel = new AnswerModel();

@@ -11,7 +11,6 @@ class LoginPresenter {
     }
 
     onLogin() {
-        debugger;
         userModel.login(userModel.state.inputUsername, userModel.state.inputPassword);
         if (userModel.state.loggedUser !== "" && userModel.state.loggedUser !== undefined) {
             window.location.assign("#/");

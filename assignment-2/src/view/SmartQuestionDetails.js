@@ -8,31 +8,32 @@ import answerPresenter from "../presenter/AnswerPresenter";
 const mapModelStateToComponentState = (questionModelState, answerModelState, props) => ({
     question: questionModelState.questions.find((question) => question.questionId == props.match.params.index),
     answers: answerModelState.answers.filter((answer) => answer.questionId == props.match.params.index)
-})
+});
 
 export default class SmartQuestionDetails extends Component {
     constructor(props) {
         super(props);
-        debugger;
-        this.state = mapModelStateToComponentState(questionModel.state, answerModel.state, props);
-        this.listener = (questionModelState, answermodelState) => this.setState(mapModelStateToComponentState(questionModelState, answermodelState, this.props));
-        questionModel.addListener("change", this.listener);
-        answerModel.addListener("change", this.listener);
+        this.state = mapModelStateToComponentState(questionModel.state, answerModel.state, this.props);
+        this.questionListener = questionModelState => this.setState(mapModelStateToComponentState(questionModelState, answerModel.state, this.props));
+        this.answerListener = answerModelState => this.setState(mapModelStateToComponentState(questionModel.state, answerModelState, this.props));
+        questionModel.addListener("change", this.questionListener);
+        answerModel.addListener("change", this.answerListener);
     }
 
     componentDidUpdate(prev) {
         if (prev.match.params.index !== this.props.match.params.index) {
-            this.setState(mapModelStateToComponentState(questionModel.state, answerModel.state, this.props));
+            this.setState(
+                mapModelStateToComponentState(questionModel.state, answerModel.state, this.props)
+            );
         }
     }
 
     componentWillUnmount() {
-        questionModel.removeListener("change", this.listener);
-        answerModel.removeListener("change", this.listener);
+        questionModel.removeListener("change", this.questionListener);
+        answerModel.removeListener("change", this.answerListener);
     }
 
     render() {
-        debugger;
         return (
             <div>
                 <QuestionDetails
@@ -47,6 +48,9 @@ export default class SmartQuestionDetails extends Component {
                 <AnswerList
                     answers={this.state.answers}
                     onRemove={answerPresenter.onRemove}
+                    onUpvote={answerPresenter.onUpvote}
+                    onDownvote={answerPresenter.onDownvote}
+                    onEdit={answerPresenter.onEdit}
                 />
             </div>
         );

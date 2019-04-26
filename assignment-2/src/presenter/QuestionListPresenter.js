@@ -16,7 +16,7 @@ class QuestionListPresenter {
         window.location.assign("#/tag/");
     }
 
-    onFilterByText(filter) { 
+    onFilterByText(filter) {
         questionModel.filterByText(filter);
         window.location.assign("#/title/");
     }

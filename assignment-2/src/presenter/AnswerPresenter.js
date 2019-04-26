@@ -14,6 +14,20 @@ class AnswerPresenter {
         answerModel.changeNewAnswerProperty("questionId", id);
         window.location.assign("#/create-answer");
     }
+
+    onUpvote(answerId) {
+        answerModel.vote(answerId, 1);
+    }
+
+    onDownvote(answerId) {
+        answerModel.vote(answerId, -1);
+    }
+    
+    onEdit(id) {
+        debugger;
+        answerModel.changeNewAnswerProperty("answerId", id);
+        window.location.assign("#/edit-answer");
+    }
 }
 
 const answerPresenter = new AnswerPresenter();
